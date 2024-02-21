@@ -1,0 +1,16 @@
+.idea
+.vscode
+.directory
+.code-workspace
+.mypy_cache
+.eslintcache
+.env
+.DS_Store
+*.mo
+*.css.map
+dist
+.nuxt
+node_modules
+yarn-error.log
+yarn.lock
+*.pyc

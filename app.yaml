@@ -1,0 +1,30 @@
+runtime: python311
+
+env_variables:
+  API_URL: https://www.kosk.be/
+
+
+handlers:
+# root 
+- url: /
+  static_files: kosk_fe/.output/public/index.html
+  upload: kosk_fe/.output/public/index.html
+  secure: always
+
+# url ending with /
+- url: /(.+)/
+  static_files: kosk_fe/.output/public/\1/index.html
+  upload: kosk_fe/.output/public/(.+)/index.html
+  secure: always
+
+# url with no dot
+- url: /([^.]*)$
+  static_files: kosk_fe/.output/public/\1/index.html
+  upload: kosk_fe/.output/public/[^.]*/index.html
+  secure: always
+
+# the rest
+- url: /(.*)
+  static_files: kosk_fe/.output/public/\1
+  upload: kosk_fe/.output/public/(.*)
+  secure: always
