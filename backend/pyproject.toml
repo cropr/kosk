@@ -1,15 +1,16 @@
 [tool.poetry]
 name = "kosk-be"
-version = "0.1.0"
+version = "1.0.0"
 description = "Kosk backend"
 authors = ["Ruben Decrop <ruben@kosk.be>"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-fastapi = "^0.104.1"
-reddevil = {path = "libs/reddevil-3.3.0-py3-none-any.whl"}
 toml = "^0.10.2"
 gunicorn = "^21.2.0"
+reddevil = {path = "libs/reddevil-3.3.5-py3-none-any.whl"}
+python-dotenv = "^1.0.1"
+paramiko = "^3.4.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.10.1"

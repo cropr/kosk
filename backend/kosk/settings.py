@@ -1,16 +1,18 @@
 #    Copyright 2022 Chessdevil Consulting
 
 import os, os.path
+import logging
 from pathlib import Path
 
 # paths
-SECRETS_PATH = Path(os.environ.get("SECRETS_PATH", ""))
 
 COLORLOG = False
+
 FILESTORE = {
     "manager": "google",
     "bucket": os.environ.get("FILESTORE_BUCKET", "kosk-website-321608.appspot.com"),
 }
+
 LOG_CONFIG = {
     "version": 1,
     "formatters": {
@@ -54,12 +56,26 @@ LOG_CONFIG = {
     },
 }
 
-try:
-    from local_settings import *
+KOSK_MODE = os.getenv("KOSK_MODE", "production")
 
-    ls = "local settings loaded"
-except ImportError:
-    ls = "No local settings found"
+SECRETS_PATH = Path(os.environ.get("SECRETS_PATH", ""))
+
+TOKEN = {
+    "timeout": 180,  # timeout in minutes
+    "secret": "kennehvrowe,endaklaagtendazaagt",
+    "algorithm": "HS256",
+    "nocheck": False,
+}
+
+ls = "No local settings found"
+
+if KOSK_MODE == "local":
+    ls = "importing local settings"
+    from env_local import *
 
 if COLORLOG:
     LOG_CONFIG["handlers"]["console"]["formatter"] = "color"  # type: ignore
+
+logging.config.dictConfig(LOG_CONFIG)
+logger = logging.getLogger(__name__)
+logger.info(ls)

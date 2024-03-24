@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted }  from 'vue'
+import { ref, onMounted } from 'vue'
 
 import { VContainer, VTabs, VTab, VWindow, VWindowItem, VDataTable, VTable } from 'vuetify/components';
 
@@ -59,11 +59,11 @@ const tab = ref(0)
 const trnopen = ref({})
 const trnexpert = ref({})
 
-async function getTournament(trn, name){
+async function getTournament(trn, name) {
   console.log('running getTournament')
   let reply
   try {
-    reply = await $backend("filestore","anon_get_file", {
+    reply = await $backend("filestore", "anon_get_file", {
       group: "trn",
       name,
     })
@@ -77,7 +77,7 @@ async function getTournament(trn, name){
   }
   trn.value = reply.data
   console.log('trn', trn.value)
-  processTournament(trn)  
+  processTournament(trn)
 }
 
 
@@ -91,7 +91,7 @@ function getWhiteResult(rescode) {
       return '½-½'
     case '1FF':
       return '1-0 FF'
-    case '0FF':
+    case '0ff':
       return '0-1 FF'
     case '-':
       return '-'
@@ -162,11 +162,11 @@ function processTournament(trn) {
         sortpairings[maxround - ix].games.push(...p.absent)
       }
     }
-  })    
+  })
   trn.value = { standings, pairings, sortpairings }
 }
 
-onMounted(()=>{
+onMounted(() => {
   getTournament(trnopen, "ckopen2023-24/ckopen.json")
   getTournament(trnexpert, "ckexperten2023-24/ckexperten.json")
 })
@@ -184,45 +184,25 @@ onMounted(()=>{
     </v-tabs>
     <v-window v-model="tab">
       <v-window-item>
-        <v-data-table
-          :items="trnexpert.standings"
-          :headers="sheaders"
-          :items-per-page="50"
-          :hide-default-footer="true"
-          mobile-breakpoint="0"
-        />
+        <v-data-table :items="trnexpert.standings" :headers="sheaders" :items-per-page="50"
+          :hide-default-footer="true" mobile-breakpoint="0" />
       </v-window-item>
       <v-window-item>
         <div v-for="p in trnexpert.sortpairings" :key="p.rnr" class="my-2">
           <h2>Ronde {{ p.rnr }}</h2>
-          <v-data-table
-            :items="p.games"
-            :headers="gheaders"
-            :items-per-page="50"
-            :hide-default-footer="true"
-            mobile-breakpoint="0"
-          />
+          <v-data-table :items="p.games" :headers="gheaders" :items-per-page="50"
+            :hide-default-footer="true" mobile-breakpoint="0" />
         </div>
       </v-window-item>
       <v-window-item>
-        <v-data-table
-          :items="trnopen.standings"
-          :headers="sheaders"
-          :items-per-page="50"
-          :hide-default-footer="true"
-          mobile-breakpoint="0"
-        />
+        <v-data-table :items="trnopen.standings" :headers="sheaders" :items-per-page="50"
+          :hide-default-footer="true" mobile-breakpoint="0" />
       </v-window-item>
       <v-window-item>
         <div v-for="p in trnopen.sortpairings" :key="p.rnr" class="my-2">
           <h2>Ronde {{ p.rnr }}</h2>
-          <v-data-table
-            :items="p.games"
-            :headers="gheaders"
-            :items-per-page="50"
-            :hide-default-footer="true"
-            mobile-breakpoint="0"
-          />
+          <v-data-table :items="p.games" :headers="gheaders" :items-per-page="50"
+            :hide-default-footer="true" mobile-breakpoint="0" />
         </div>
       </v-window-item>
     </v-window>
